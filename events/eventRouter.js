@@ -1,4 +1,4 @@
-// Complete
+// WIP: see below
 
 const router = require('express').Router();
 
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/:id', restricted, async (req, res) => {
+router.get('/:id', async (req, res) => {
     const { id } = req.params;
 
     try {
@@ -40,12 +40,14 @@ router.post('/', restricted, async (req, res) => {
         });
 });
 
+
+// The delete is working but the response isn't working. WIP 
 router.delete('/:id', restricted, (req, res) => {
     const { id } = req.params;
 
     Events.remove(id)
         .then(deleted => {
-            res.status(204).json({ message: 'That event was successfully deleted.' });
+            res.status(200).json({ message: 'That event was successfully deleted.' });
         })
         .catch(error => {
             res.status(500).json({ message: 'That event could not be deleted.' });

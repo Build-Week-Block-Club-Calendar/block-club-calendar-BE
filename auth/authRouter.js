@@ -22,34 +22,36 @@ router.post('/register', (req, res) => {
 });
 
 router.post('/login', (req, res) => {
-    let {username, password} = req.body;
-
+    let { username, password } = req.body;
+    console.log(username, password);
     Users.findBy({ username })
         .first()
         .then(user => {
+            console.log(user);
             if (user && bcrypt.compareSync(password, user.password)) {
                 const token = generateToken(user);
+                console.log('token:', token);
 
                 res.status(200).json({ message: `Welcome, ${user.username}.`, token, });
             } else {
                 res.status(401).json({ message: 'Invalid credentials.' });
-            };
+            }
         })
         .catch(error => {
-            res.status(500).json(error);
+            res.status(500).send(error);
         });
 });
 
 function generateToken(user) {
     const payload = {
-        username: user.username,
-        subject: user.id,
+      username: user.username,
+      subject: user.id,
     };
     const options = {
-        expriesIn: '1w',
+      expiresIn: '1h',
     };
-
+  
     return jwt.sign(payload, secret.jwtSecret, options);
-};
+  }
 
 module.exports = router;

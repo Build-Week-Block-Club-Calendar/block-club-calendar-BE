@@ -1,4 +1,4 @@
-# block-club-calendar-BE
+# Block Club Calendar
 
 ## Table of Contents
 
@@ -12,10 +12,10 @@ This database allows users to register, login, and view all events in the databa
 ## API Endpoints
 
 ### Authentication
-Method | Endpoint | Body | Notes
-[ ----- ] | [ ----------------- ] | [ ------------------------------ ] | [ ------------------ ]
-POST | /api/auth/register | username(REQUIRED), password(REQUIRED), email, name, organizations, avatarUrl, role | Creates a new user object in the database.
-POST | /api/auth/login |  username(REQUIRED), password(REQUIRED) | Returns username and JSON Web Token.
+Method | Endpoint | Body | Notes |
+| ----- | ----------------- | ------------------------------ | ------------------ |
+POST | /api/auth/register | username(REQUIRED), password(REQUIRED), email, name, organizations, avatarUrl, role | Creates a new user object in the database. |
+POST | /api/auth/login |  username(REQUIRED), password(REQUIRED) | Returns username and JSON Web Token. |
 
 ### Events
 Method | Endpoint | Body | Notes

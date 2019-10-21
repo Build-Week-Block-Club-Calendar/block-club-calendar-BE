@@ -12,34 +12,34 @@ This database allows users to register, login, and view all events in the databa
 ## API Endpoints
 
 ### Authentication
-Method | Endpoint | Body | Notes |
-| ----- | ----------------- | ------------------------------ | ------------------ |
-POST | /api/auth/register | username(REQUIRED), password(REQUIRED), email, name, organizations, avatarUrl, role | Creates a new user object in the database. |
-POST | /api/auth/login |  username(REQUIRED), password(REQUIRED) | Returns username and JSON Web Token. |
+Method | Endpoint | Body(required) | Body(optional) | Notes
+| ----- | ----------------- | -------------------- | --------------------- | ------------------ |
+POST | /api/auth/register | username, password | email, name, organizations, avatarUrl, role | Creates a new user object in the database. |
+POST | /api/auth/login |  username, password | N/A | Returns username and JSON Web Token. |
 
 ### Events
-Method | Endpoint | Body | Notes
-| ----- | ----------------- | ------------------------------ | ------------------ |
+Method | Endpoint | Body(required) | Body(optional) | Notes
+| ----- | ----------------- | -------------------- | --------------------- | ------------------ |
 GET | /api/events | N/A | Returns an object of all the events in the database. |
 GET | /api/events/:id | N/A | Returns a singular event object based on ID. |
-POST | /api/events | Title(REQUIRED), Date(REQUIRED), Time(REQUIRED), Location(REQUIRED), Description, Link, Image | Allows users to post brand new events to the database. |
+POST | /api/events | Title, Date, Time, Location | Description, Link, Image | Allows users to post brand new events to the database. |
 
 ### Events (non-admin)
-Method | Endpoint | Body | Notes
-| ----- | ----------------- | ------------------------------ | ------------------ |
+Method | Endpoint | Body(required) | Body(optional) | Notes
+| ----- | ----------------- | -------------------- | --------------------- | ------------------ |
 DELETE | /api/events/:id | N/A | Allows users to delete their own events. |
-PUT | /api/events/:id | Title(REQUIRED), Date(REQUIRED), Time(REQUIRED), Location(REQUIRED), Description, Link, Image | Allows users to edit their own events. |
+PUT | /api/events/:id | Title, Date, Time, Location | Description, Link, Image | Allows users to edit their own events. |
 
 ### Events (admin)
-Method | Endpoint | Body | Notes
-| ----- | ----------------- | ------------------------------ | ------------------ |
+Method | Endpoint | Body(required) | Body(optional) | Notes
+| ----- | ----------------- | -------------------- | --------------------- | ------------------ |
 DELETE | /api/events/:id | N/A | Allows admins to delete ANY event. |
-PUT | /api/events/:id | Title(REQUIRED), Date(REQUIRED), Time(REQUIRED), Location(REQUIRED), Description, Link, Image | Allows admins to edit ANY event. |
+PUT | /api/events/:id | Title, Date, Time, Location | Description, Link, Image | Allows admins to edit ANY event. |
 
 ### Users
-Method | Endpoint | Body | Notes
-| ----- | ----------------- | ------------------------------ | ------------------ |
-GET | /api/users | N/A | Allows an admin to see a list of all the users in the database. |
+Method | Endpoint | Body(required) | Body(optional) | Notes
+| ----- | ----------------- | -------------------- | --------------------- | ------------------ |
+GET | /api/users | N/A | N/A | Allows an admin to see a list of all the users in the database. |
 
 ## Credits
 ### Project Manager

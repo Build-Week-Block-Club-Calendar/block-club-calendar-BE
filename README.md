@@ -49,7 +49,7 @@ Marina Baskova: https://github.com/MarinaBaskova
 David Hennig: https://github.com/davidhennig
 
 ### Frontend
-Jackson Ogles: https://github.com/cjogles
+Jackson Ogles: https://github.com/cjogles <br>
 Louis Gelinas: https://github.com/gelinas
 
 ### Backend

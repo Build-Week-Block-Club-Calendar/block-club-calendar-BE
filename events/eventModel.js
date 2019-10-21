@@ -1,10 +1,11 @@
-// Complete
+// WIP
 
 const db = require('../data/dbConfig.js');
 
 module.exports = {
     findById,
     getAllEvents,
+    getEventsByOrganizer,
     insert,
     remove,
     update,
@@ -18,6 +19,12 @@ function findById(id) {
 
 function getAllEvents() {
     return db('events');
+};
+
+function getEventsByOrganizer(organizer) {
+    return db('events').join('event_organizers', 'events.id', '=', 'event_organizers.organizer_id')
+        .where('organizer_id', organizer)
+        .first();
 };
 
 async function insert(event) {

@@ -7,7 +7,7 @@
 - **[Credits](#credits)**<br>
 
 ## <a name='overview'></a>Overview
-This database allows users to register, login, and view all events in the database. It also allows the admin account to add, edit, and delete events as well as view all the users in the database.
+This database allows users to register, login, and view all events in the database. It also allows users to create, edit, and delete their OWN events. Finally, it allows the ADMIN account to create, edit, and delete ANY event as well as view all the users in the database.
 
 ## API Endpoints
 
@@ -27,8 +27,8 @@ POST | /api/events | Title, Date, Time, Location | Description, Link, Image | Al
 ### Events (non-admin)
 Method | Endpoint | Body (required) | Body (optional) | Notes
 | ----- | ----------------- | -------------------- | --------------------- | ------------------ |
-DELETE | /api/events/:id | N/A | N/A | Allows users to delete their own events. |
-PUT | /api/events/:id | Title, Date, Time, Location | Description, Link, Image | Allows users to edit their own events. |
+DELETE | /api/events/:id | N/A | N/A | Allows users to delete their OWN events. |
+PUT | /api/events/:id | Title, Date, Time, Location | Description, Link, Image | Allows users to edit their OWN events. |
 
 ### Events (admin)
 Method | Endpoint | Body (required) | Body (optional) | Notes
@@ -36,7 +36,7 @@ Method | Endpoint | Body (required) | Body (optional) | Notes
 DELETE | /api/events/:id | N/A | N/A | Allows admins to delete ANY event. |
 PUT | /api/events/:id | Title, Date, Time, Location | Description, Link, Image | Allows admins to edit ANY event. |
 
-### Users
+### Users (admin)
 Method | Endpoint | Body (required) | Body (optional) | Notes
 | ----- | ----------------- | -------------------- | --------------------- | ------------------ |
 GET | /api/users | N/A | N/A | Allows an admin to see a list of all the users in the database. |

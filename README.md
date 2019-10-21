@@ -36,7 +36,7 @@ Method | Endpoint | Body | Notes
 DELETE | /api/events/:id | N/A | Allows admins to delete ANY event. |
 PUT | /api/events/:id | Title(REQUIRED), Date(REQUIRED), Time(REQUIRED), Location(REQUIRED), Description, Link, Image | Allows admins to edit ANY event. |
 
-## Users
+### Users
 Method | Endpoint | Body | Notes
 | ----- | ----------------- | ------------------------------ | ------------------ |
 GET | /api/users | N/A | Allows an admin to see a list of all the users in the database. |

@@ -4,6 +4,7 @@ const router = require('express').Router();
 
 const Events = require('./eventModel.js');
 const restricted = require('../auth/authMiddleware.js');
+const checkRole = require('../auth/check-admin-middleware.js');
 
 router.get('/', (req, res) => {
     Events.getAllEvents()
@@ -42,7 +43,7 @@ router.post('/', restricted, async (req, res) => {
 
 
 // The delete is working but the response isn't working. WIP 
-router.delete('/:id', restricted, (req, res) => {
+router.delete('/:id', restricted, checkRole('admin'), (req, res) => {
     const { id } = req.params;
 
     Events.remove(id)
@@ -54,7 +55,7 @@ router.delete('/:id', restricted, (req, res) => {
         });
 });
 
-router.put('/:id', restricted, async (req, res) => {
+router.put('/:id', restricted, checkRole('admin'), async (req, res) => {
     try {
         const event = await Events.update(req.params.id, req.body);
         if (event) {

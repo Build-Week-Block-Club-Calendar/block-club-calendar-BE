@@ -31,6 +31,8 @@ router.get('/:organizer', async (req, res) => {
 });
 
 router.post('/', restricted, async (req, res) => {
+    const organizerId = req.user.id;
+    req.body.organizer_id = organizerId;
     await Events.insert(req.body)
         .then(event => {
             res.status(201).json(event);

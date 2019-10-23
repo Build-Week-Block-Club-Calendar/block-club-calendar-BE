@@ -11,7 +11,8 @@ exports.up = function(knex) {
         table.string('password', 128)
             .notNullable();
         table.string('organizations', 512);
-        table.string('avatarUrl', 512);
+        table.string('avatarUrl', 512)
+            .defaultTo('../../images/default-icon.jpg');
         table.string('role', 128);
   });
 };

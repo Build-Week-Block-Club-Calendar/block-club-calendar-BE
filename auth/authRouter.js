@@ -23,20 +23,16 @@ router.post('/register', (req, res) => {
 
 router.post('/login', (req, res) => {
     let { username, password, role } = req.body;
-    console.log(username, password, role);
     Users.findBy({ username })
         .first()
         .then(user => {
-            console.log(user);
             if (user && password === user.password) {
                 const token = generateToken(user);
-                console.log('token:', token);
 
                 res.status(200).json({ message: `Welcome, ${user.username}.`, token, user });
             }
             else if (user && bcrypt.compareSync(password, user.password)) {
                 const token = generateToken(user);
-                console.log('token:', token);
 
                 res.status(200).json({ message: `Welcome, ${user.username}.`, token, });
             } 

@@ -1,4 +1,4 @@
-// WIP
+// Complete
 
 const router = require('express').Router();
 
@@ -9,8 +9,6 @@ const checkRole = require('../auth/check-admin-middleware.js');
 router.get('/users', restricted, checkRole('admin'), (req, res) => {
     Admin.find()
         .then(users => {
-            console.log('users:', users)
-            console.log('here:', req.user);
             res.status(200).json({ loggedInUser: req.username, users });
         })
         .catch(error => {
@@ -18,7 +16,6 @@ router.get('/users', restricted, checkRole('admin'), (req, res) => {
         });
 });
 
-// The delete is working but the response isn't working. WIP 
 router.delete('/:id', restricted, checkRole('admin'), (req, res) => {
     const { id } = req.params;
 

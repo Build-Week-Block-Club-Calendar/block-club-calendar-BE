@@ -1,4 +1,4 @@
-// WIP: see below
+// Complete
 
 const router = require('express').Router();
 
@@ -31,7 +31,6 @@ router.get('/:organizer', async (req, res) => {
 });
 
 router.post('/', restricted, async (req, res) => {
-    console.log(req.body);
     await Events.insert(req.body)
         .then(event => {
             res.status(201).json(event);
@@ -41,16 +40,11 @@ router.post('/', restricted, async (req, res) => {
         });
 });
 
-// The delete is working but the response isn't working. WIP 
 router.delete('/:id', restricted, (req, res) => {
     const { id } = req.params;
 
-    console.log(req.params);
-    console.log(req.user);
-
     Events.findByIdOrganizer(id)
         .then(event => {
-            console.log(event);
             if (event.Organizer === req.user.username) {
                 Events.remove(id)
                 .then(deleted => {

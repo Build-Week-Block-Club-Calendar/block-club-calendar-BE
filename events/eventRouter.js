@@ -68,17 +68,26 @@ router.delete('/:id', restricted, (req, res) => {
         });
 });
 
-router.put('/:id', restricted, async (req, res) => {
-    try {
-        const event = await Events.update(req.params.id, req.body);
-        if (event) {
-            res.status(200).json({ message: 'That event has been successfully updated.' });
-        } else {
-            res.status(404).json({ message: 'That event could not be found.' });
-        };
-    } catch (error) {
-        res.status(500).json(error);
-    }
+router.put('/:id', restricted, (req, res) => {
+    const { id } = req.params;
+
+    Events.findByIdOrganizer(id)
+        .then(event => {
+            if (event.Organizer === req.user.username) {
+                Events.update(id, req.body)
+                    .then(event => {
+                        res.status(200).json({ message: 'That event has been successfully updated.' });
+                    })
+                    .catch(error => {
+                        res.status(404).json({ message: 'That event could not be found.' });
+                    });
+            } else {
+                res.status(500).json({ message: 'You don\'t have access to change that event.' });
+            };
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'You do not have access to change that event.' });
+        });
 });
 
 module.exports = router;

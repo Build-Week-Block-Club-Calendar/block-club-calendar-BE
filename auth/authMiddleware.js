@@ -11,7 +11,9 @@ module.exports = (req, res, next) => {
             if (error) {
                 res.status(401).json({ message: 'Wrong info.' });
             } else {
+                // req.decodedToken = decodedToken;
                 req.user = {
+                    id: decodedToken.subject,
                     username: decodedToken.username,
                     role: decodedToken.role,
                 };

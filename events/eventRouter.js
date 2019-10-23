@@ -1,10 +1,9 @@
-// WIP: see below
+// Complete
 
 const router = require('express').Router();
 
 const Events = require('./eventModel.js');
 const restricted = require('../auth/authMiddleware.js');
-const checkRole = require('../auth/check-admin-middleware.js');
 
 router.get('/', (req, res) => {
     Events.getAllEvents()
@@ -16,15 +15,15 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
+router.get('/:organizer', async (req, res) => {
+    const { organizer } = req.params;
 
     try {
-        const events = await Events.findById(id);
+        const events = await Events.getEventsByOrganizer(organizer);
         if (events) {
             res.json(events);
         } else {
-            res.status(404).json({ message: 'Could not find an event with that ID.' });
+            res.status(404).json({ message: 'Could not find an event created by that Organizer.' });
         };
     } catch (error) {
         res.status(500).json({ message: 'Could not get that event.' });
@@ -41,31 +40,48 @@ router.post('/', restricted, async (req, res) => {
         });
 });
 
-
-// The delete is working but the response isn't working. WIP 
-router.delete('/:id', restricted, checkRole('admin'), (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
     const { id } = req.params;
 
-    Events.remove(id)
-        .then(deleted => {
-            res.status(200).json({ message: 'That event was successfully deleted.' });
+    Events.findByIdOrganizer(id)
+        .then(event => {
+            if (event.Organizer === req.user.username) {
+                Events.remove(id)
+                .then(deleted => {
+                    res.status(200).json({ message: 'That event was successfully deleted.' });
+                })
+                .catch(error => {
+                    res.status(500).json({ message: 'That event could not be deleted.' });
+                });
+            } else {
+                res.status(500).json({ message: 'You don\'t have access to change that event.' });
+            };
         })
         .catch(error => {
-            res.status(500).json({ message: 'That event could not be deleted.' });
+            res.status(500).json({ message: 'You do not have access to change that event.' });
         });
 });
 
-router.put('/:id', restricted, checkRole('admin'), async (req, res) => {
-    try {
-        const event = await Events.update(req.params.id, req.body);
-        if (event) {
-            res.status(200).json({ message: 'That event has been successfully updated.' });
-        } else {
-            res.status(404).json({ message: 'That event could not be found.' });
-        };
-    } catch (error) {
-        res.status(500).json(error);
-    }
+router.put('/:id', restricted, (req, res) => {
+    const { id } = req.params;
+
+    Events.findByIdOrganizer(id)
+        .then(event => {
+            if (event.Organizer === req.user.username) {
+                Events.update(id, req.body)
+                    .then(event => {
+                        res.status(200).json({ message: 'That event has been successfully updated.' });
+                    })
+                    .catch(error => {
+                        res.status(404).json({ message: 'That event could not be found.' });
+                    });
+            } else {
+                res.status(500).json({ message: 'You don\'t have access to change that event.' });
+            };
+        })
+        .catch(error => {
+            res.status(500).json({ message: 'You do not have access to change that event.' });
+        });
 });
 
 module.exports = router;

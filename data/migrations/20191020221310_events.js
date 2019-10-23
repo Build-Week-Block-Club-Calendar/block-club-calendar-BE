@@ -13,7 +13,6 @@ exports.up = function(knex) {
             .defaultTo('../../images/default-icon.jpg');
         table.integer('organizer_id')
             .unsigned()
-            .notNullable()
             .references('id')
             .inTable('users')
             .onUpdate('CASCADE')

@@ -21,20 +21,20 @@ POST | /api/auth/login |  username, password | N/A | Returns username, JSON Web 
 Method | Endpoint | Body (required) | Body (optional) | Notes
 | ----- | ----------------- | -------------------- | --------------------- | ------------------ |
 GET | /api/events | N/A | N/A | Returns an object of all the events in the database. |
-GET | /api/events/:id | N/A | N/A | Returns a singular event object based on ID. |
-POST | /api/events | Title, Date, Time, Location, Organizer | Description, Link, Image | Allows users to post brand new events to the database. |
+GET | /api/events/:organizer | N/A | N/A | Returns a singular event object based on ID. |
+POST | /api/events | Title, Date, Time, Location | Description, Link, Image | Allows users to post brand new events to the database. |
 
 ### Events (non-admin)
 Method | Endpoint | Body (required) | Body (optional) | Notes
 | ----- | ----------------- | -------------------- | --------------------- | ------------------ |
 DELETE | /api/events/:id | N/A | N/A | Allows users to delete their OWN events. |
-PUT | /api/events/:id | Title, Date, Time, Location, Organizer | Description, Link, Image | Allows users to edit their OWN events. |
+PUT | /api/events/:id | Title, Date, Time, Location | Description, Link, Image | Allows users to edit their OWN events. |
 
 ### Events (admin)
 Method | Endpoint | Body (required) | Body (optional) | Notes
 | ----- | ----------------- | -------------------- | --------------------- | ------------------ |
 DELETE | /api/admin/:id | N/A | N/A | Allows admins to delete ANY event. |
-PUT | /api/admin/:id | Title, Date, Time, Location, Organizer | Description, Link, Image | Allows admins to edit ANY event. |
+PUT | /api/admin/:id | Title, Date, Time, Location | Description, Link, Image | Allows admins to edit ANY event. |
 
 ### Users (admin)
 Method | Endpoint | Body (required) | Body (optional) | Notes

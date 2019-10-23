@@ -18,7 +18,7 @@ async function add(user) {
 };
 
 function find() {
-    return db('users').select('id', 'username', 'role');
+    return db('users').select('*');
 };
 
 function findBy(filter) {

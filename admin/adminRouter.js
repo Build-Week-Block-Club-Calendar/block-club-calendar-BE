@@ -6,7 +6,7 @@ const Admin = require('./adminModel.js');
 const restricted = require('../auth/authMiddleware.js');
 const checkRole = require('../auth/check-admin-middleware.js');
 
-router.get('/', restricted, checkRole('admin'), (req, res) => {
+router.get('/users', restricted, checkRole('admin'), (req, res) => {
     Admin.find()
         .then(users => {
             console.log('users:', users)

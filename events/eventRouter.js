@@ -31,6 +31,7 @@ router.get('/:organizer', async (req, res) => {
 });
 
 router.post('/', restricted, async (req, res) => {
+    console.log(req.body);
     await Events.insert(req.body)
         .then(event => {
             res.status(201).json(event);
@@ -44,12 +45,26 @@ router.post('/', restricted, async (req, res) => {
 router.delete('/:id', restricted, (req, res) => {
     const { id } = req.params;
 
-    Events.remove(id)
-        .then(deleted => {
-            res.status(200).json({ message: 'That event was successfully deleted.' });
+    console.log(req.params);
+    console.log(req.user);
+
+    Events.findByIdOrganizer(id)
+        .then(event => {
+            console.log(event);
+            if (event.Organizer === req.user.username) {
+                Events.remove(id)
+                .then(deleted => {
+                    res.status(200).json({ message: 'That event was successfully deleted.' });
+                })
+                .catch(error => {
+                    res.status(500).json({ message: 'That event could not be deleted.' });
+                });
+            } else {
+                res.status(500).json({ message: 'You don\'t have access to change that event.' });
+            };
         })
         .catch(error => {
-            res.status(500).json({ message: 'That event could not be deleted.' });
+            res.status(500).json({ message: 'You do not have access to change that event.' });
         });
 });
 

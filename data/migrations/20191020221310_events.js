@@ -9,17 +9,15 @@ exports.up = function(knex) {
         table.string('Location', 128).notNullable();
         table.string('Description', 512);
         table.string('Link', 512);
-        table.string('Image', 512);
-    })
-    .createTable('event_organizers', table => {
-        table.increments();
+        table.string('Image', 512)
+            .defaultTo('../../images/default-icon.jpg');
         table.integer('organizer_id')
             .unsigned()
             .notNullable()
             .references('id')
             .inTable('users')
             .onUpdate('CASCADE')
-            .onDelete('RESTRICT');     
+            .onDelete('RESTRICT');  
     })
     .createTable('event_confirmations', table => {
         table.increments();

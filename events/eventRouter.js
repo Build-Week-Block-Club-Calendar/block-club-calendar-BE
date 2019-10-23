@@ -16,20 +16,32 @@ router.get('/', (req, res) => {
         });
 });
 
-router.get('/:id', async (req, res) => {
-    const { id } = req.params;
+router.get('/:organizer', async (req, res) => {
+    const { organizer } = req.params;
 
     try {
-        const events = await Events.findById(id);
+        const events = await Events.getEventsByOrganizer(organizer);
         if (events) {
             res.json(events);
         } else {
-            res.status(404).json({ message: 'Could not find an event with that ID.' });
+            res.status(404).json({ message: 'Could not find an event with that Organizer.' });
         };
     } catch (error) {
         res.status(500).json({ message: 'Could not get that event.' });
     };
 });
+
+// router.get('/:organizer', (req, res) => {
+//     const { organizer } = req.params
+
+//     Events.getEventsByOrganizer(organizer)
+//         .then(eventOrganizer => {
+//             res.status(200).json(eventOrganizer);
+//         })
+//         .catch(error => {
+//             res.status(404).json(error.message);
+//         });
+// });
 
 router.post('/', restricted, async (req, res) => {
     await Events.insert(req.body)

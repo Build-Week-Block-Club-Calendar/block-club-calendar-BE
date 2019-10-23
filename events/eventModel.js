@@ -21,10 +21,13 @@ function getAllEvents() {
     return db('events');
 };
 
+// select id, Title, Date, Time, Location, Description, Link, Image, username Organizer from events e join users u on e.organizer_id = u.id
+
 function getEventsByOrganizer(organizer) {
-    return db('events').join('event_organizers', 'events.id', '=', 'event_organizers.organizer_id')
-        .where('organizer_id', organizer)
-        .first();
+    return db('events')
+        .select('events.id', 'Title', 'Date', 'Time', 'Location', 'Description', 'Link', 'Image', 'username as Organizer')
+        .join('users', 'events.organizer_id', '=', 'users.id')
+        .where('Organizer', organizer);
 };
 
 async function insert(event) {

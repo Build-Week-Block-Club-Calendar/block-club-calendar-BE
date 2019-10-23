@@ -4,7 +4,6 @@ const router = require('express').Router();
 
 const Events = require('./eventModel.js');
 const restricted = require('../auth/authMiddleware.js');
-const checkRole = require('../auth/check-admin-middleware.js');
 
 router.get('/', (req, res) => {
     Events.getAllEvents()
@@ -24,24 +23,12 @@ router.get('/:organizer', async (req, res) => {
         if (events) {
             res.json(events);
         } else {
-            res.status(404).json({ message: 'Could not find an event with that Organizer.' });
+            res.status(404).json({ message: 'Could not find an event created by that Organizer.' });
         };
     } catch (error) {
         res.status(500).json({ message: 'Could not get that event.' });
     };
 });
-
-// router.get('/:organizer', (req, res) => {
-//     const { organizer } = req.params
-
-//     Events.getEventsByOrganizer(organizer)
-//         .then(eventOrganizer => {
-//             res.status(200).json(eventOrganizer);
-//         })
-//         .catch(error => {
-//             res.status(404).json(error.message);
-//         });
-// });
 
 router.post('/', restricted, async (req, res) => {
     await Events.insert(req.body)
@@ -53,9 +40,8 @@ router.post('/', restricted, async (req, res) => {
         });
 });
 
-
 // The delete is working but the response isn't working. WIP 
-router.delete('/:id', restricted, checkRole('admin'), (req, res) => {
+router.delete('/:id', restricted, (req, res) => {
     const { id } = req.params;
 
     Events.remove(id)
@@ -67,7 +53,7 @@ router.delete('/:id', restricted, checkRole('admin'), (req, res) => {
         });
 });
 
-router.put('/:id', restricted, checkRole('admin'), async (req, res) => {
+router.put('/:id', restricted, async (req, res) => {
     try {
         const event = await Events.update(req.params.id, req.body);
         if (event) {

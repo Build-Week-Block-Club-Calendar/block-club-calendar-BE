@@ -36,6 +36,12 @@ Method | Endpoint | Body (required) | Body (optional) | Notes
 DELETE | /api/admin/:id | N/A | N/A | Allows admins to delete ANY event. |
 PUT | /api/admin/:id | Title, Date, Time, Location | Description, Link, Image | Allows admins to edit ANY event. |
 
+### Going
+Method | Endpoint | Body (required) | Body (optional) | Notes
+| ----- | ----------------- | -------------------- | --------------------- | ------------------ |
+GET | /api/going | N/A | N/A | Returns a list of all event confirmations (which users confirmed which events they are going to). |
+POST | /api/going | event_id | N/A | Allows users to confirm which events they are going to. |
+
 ### Users (admin)
 Method | Endpoint | Body (required) | Body (optional) | Notes
 | ----- | ----------------- | -------------------- | --------------------- | ------------------ |

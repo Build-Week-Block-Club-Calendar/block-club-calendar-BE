@@ -8,6 +8,7 @@ const restricted = require('../auth/authMiddleware.js');
 router.get('/', (req, res) => {
     Events.getAllEvents()
         .then(events => {
+            console.log(events);
             res.status(200).json(events);
         })
         .catch(error => {

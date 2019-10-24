@@ -10,13 +10,15 @@ exports.up = function(knex) {
         table.string('Description', 512);
         table.string('Link', 512);
         table.string('Image', 512)
-            .defaultTo('../../images/default-icon.jpg');
+            .defaultTo('https://detroitmi.gov/themes/custom/detroitmi/logo.png');
         table.integer('organizer_id')
             .unsigned()
             .references('id')
             .inTable('users')
             .onUpdate('CASCADE')
-            .onDelete('RESTRICT');  
+            .onDelete('CASCADE');
+        table.boolean('approved')
+            .defaultTo(0);
     })
     .createTable('event_confirmations', table => {
         table.increments();
@@ -27,7 +29,7 @@ exports.up = function(knex) {
             .references('id')
             .inTable('users')
             .onUpdate('CASCADE')
-            .onDelete('RESTRICT');
+            .onDelete('CASCADE');
 
         table.integer('event_id')
             .unsigned()
@@ -35,7 +37,7 @@ exports.up = function(knex) {
             .references('id')
             .inTable('events')
             .onUpdate('CASCADE')
-            .onDelete('RESTRICT');
+            .onDelete('CASCADE');
     });
 };
 

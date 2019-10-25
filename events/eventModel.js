@@ -21,14 +21,14 @@ function findById(id) {
 function findByIdOrganizer(id) {
     return db('events')
         .where('events.id', id)
-        .select('events.id', 'Title', 'Date', 'Time', 'Location', 'Description', 'Link', 'Image', 'username as Organizer')
+        .select('events.id', 'Title', 'Date', 'Address', 'Location', 'Description', 'Link', 'Image', 'username as Organizer', 'approved')
         .join('users', 'events.organizer_id', '=', 'users.id')
         .first();
 };
 
 function getAllEvents() {
     return db('events')
-        .select('events.id', 'Title', 'Date', 'Time', 'Location', 'Description', 'Link', 'Image', 'username as Organizer')
+        .select('events.id', 'Title', 'Date', 'Address', 'Location', 'Description', 'Link', 'Image', 'username as Organizer', 'approved')
         .join('users', 'events.organizer_id', '=', 'users.id');
 };
 
@@ -36,7 +36,7 @@ function getAllEvents() {
 
 function getEventsByOrganizer(organizer) {
     return db('events')
-        .select('events.id', 'Title', 'Date', 'Time', 'Location', 'Description', 'Link', 'Image', 'username as Organizer')
+        .select('events.id', 'Title', 'Date', 'Address', 'Location', 'Description', 'Link', 'Image', 'username as Organizer', 'approved')
         .join('users', 'events.organizer_id', '=', 'users.id')
         .where('Organizer', organizer);
 };
